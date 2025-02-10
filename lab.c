@@ -14,7 +14,7 @@ typedef struct {
  * @return int Retorna 1 se a lista estiver cheia, caso contrário, retorna 0.
  */
 int esta_cheia(Lista *lista) {
-    // implementar
+    return lista->n == TAMANHO;
 }
 
 /**
@@ -24,7 +24,7 @@ int esta_cheia(Lista *lista) {
  * @return int Retorna 1 se a lista estiver vazia, caso contrário, retorna 0.
  */
 int esta_vazia(Lista *lista) {
-    // implementar
+    return lista->n == 0;
 }
 
 /**
@@ -35,7 +35,13 @@ int esta_vazia(Lista *lista) {
  * @return int Retorna o índice onde o valor deve ser inserido.
  */
 int encontrar_posicao(Lista *lista, int valor) {
-    // implementar
+    int i;
+    for( i = 0; i < lista->n; i++){
+        if(lista->valores[i] >= valor){
+            return i;
+        }
+    }
+    return i;
 }
 
 /**
@@ -45,7 +51,9 @@ int encontrar_posicao(Lista *lista, int valor) {
  * @param indice O índice a partir do qual os elementos serão movidos.
  */
 void deslocar_direita(Lista *lista, int indice) {
-    // implementar
+    for (int idx = lista->n; idx > indice; idx--){
+        lista->valores[idx] = lista->valores[idx - 1];
+    }
 }
 
 /**
@@ -55,7 +63,9 @@ void deslocar_direita(Lista *lista, int indice) {
  * @param indice O índice a partir do qual os elementos serão movidos.
  */
 void deslocar_esquerda(Lista *lista, int indice) {
-    // implementar
+    for (int idx = indice; idx < lista->n; idx++){
+        lista->valores[idx] = lista->valores[idx + 1];
+    }
 }
 
 /**
@@ -66,7 +76,15 @@ void deslocar_esquerda(Lista *lista, int indice) {
  * @return int Retorna 1 se a inserção for bem-sucedida, ou 0 se a lista estiver cheia.
  */
 int inserir(Lista *lista, int valor) {
-    // implementar
+    if(esta_cheia(lista)) {
+        return 0;
+    }
+
+    int idx = encontrar_posicao(lista, valor);
+    deslocar_direita(lista, idx);
+    lista->valores[idx] = valor;
+    lista->n++;
+    return 1;
 }
 
 /**
@@ -77,7 +95,14 @@ int inserir(Lista *lista, int valor) {
  * @return int Retorna o valor removido se a remoção for bem-sucedida, ou -1 se a lista estiver vazia.
  */
 int remover(Lista *lista, int valor) {
-    // implementar
+    if(esta_vazia(lista)){
+        return 0;
+    }
+
+    int idx = encontrar_posicao(lista, valor);
+    deslocar_esquerda(lista, idx);
+    lista->n--;
+    return 1;
 }
 
 /**
@@ -86,7 +111,10 @@ int remover(Lista *lista, int valor) {
  * @param lista Ponteiro para a lista.
  */
 void exibir_lista(const Lista *lista) {
-    // implementar
+    for(int x = 0; x < lista->n; x++){
+        printf("%d ", lista->valores[x]);
+    }
+    printf("\n");
 }
 
 int main(void) {
@@ -110,3 +138,5 @@ int main(void) {
 
     return 0;
 }
+
+
