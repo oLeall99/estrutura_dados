@@ -48,8 +48,8 @@ void insert(LDE *list, int value){
     
   }else {
     anterior->next = new;
+    new->next = current;
   }
-  new->next = current;
 
   list->qtd++;
 }
