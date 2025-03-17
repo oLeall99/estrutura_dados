@@ -60,6 +60,7 @@ int dequeue(Queue *queue){
     if(queue->qtde == 1){
         item = queue->head; 
         queue->head = NULL;
+        queue->tail = NULL;
     }
     else {
         item = queue->tail;
